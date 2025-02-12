@@ -1,5 +1,5 @@
 # Devops-velse1
-gennemførelse af øvelse 1 vedrørende
+devops ting vedrørende CI
 
 
 TESTBRANCH FRA MIG?
