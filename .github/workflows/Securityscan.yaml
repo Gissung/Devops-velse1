@@ -1,7 +1,7 @@
 name: Security Scan
 on: [push, pull_request]
 jobs:
-  scan:
+  SecCheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
