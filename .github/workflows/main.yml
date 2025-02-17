@@ -68,10 +68,13 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm install
 
+      - name: Run a basic test
+        run: echo "CI Pipeline Running!"
+
       - name: Run tests
         run: npm test -- /ci-demo-main/tests/squareroot.test.js # Tilpas testkommando efter behov
 
-  build:
+build:
     runs-on: ubuntu-latest
 
     steps:
