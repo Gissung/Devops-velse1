@@ -75,9 +75,9 @@ jobs:
         run: npm test -- /ci-demo-main/tests/squareroot.test.js # Tilpas testkommando efter behov
 
 build:
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
 
-    steps:
+  steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
