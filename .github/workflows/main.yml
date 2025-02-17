@@ -1,16 +1,94 @@
-name: Simple CI Pipeline
-on: [push, pull_request]
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  build:
+  cache:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run a basic test
-        run: echo "CI Pipeline Running!"
-      - name: Run tests
-        run: bash test_script.sh
-      - name: Install npm
+
+      - name: Cache Node.js modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+  lint:
+    needs: cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore cached Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install npm dependencies if cache miss
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm install
-      - name: Run Tests
-        run: npm test -- /ci-demo-main/tests/squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
+
+      - name: Lint Code with ESLint
+        run: npx eslint .
+
+      - name: Format Code with Prettier
+        run: npx prettier --check .
+
+  test:
+    needs: cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore cached Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install npm dependencies if cache miss
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Run tests
+        run: npm test -- /ci-demo-main/tests/squareroot.test.js # Tilpas testkommando efter behov
+
+  build:
+    needs: cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Restore cached Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install npm dependencies if cache miss
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build project
+        run: npm run build
