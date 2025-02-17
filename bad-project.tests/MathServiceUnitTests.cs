@@ -14,7 +14,7 @@ namespace bad_project.tests
             var calculator = new FakeCalculator();
             var mathService = new MathService(calculator);
             int[] numbers = [1, 2, 3, 4, 5];
-            Assert.Equal(15, mathService.CalculateSum(numbers)); // Fejlen her: 1+2+3+4+5=15, men er det det der returneres?
+            Assert.Equal(16, mathService.CalculateSum(numbers)); // Fejlen her: 1+2+3+4+5=15, men er det det der returneres?
         }
 
         class FakeCalculator : ICalculator
