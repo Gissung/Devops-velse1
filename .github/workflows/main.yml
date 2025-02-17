@@ -10,3 +10,5 @@ jobs:
         run: echo "CI Pipeline Running!"
       - name: Run tests
         run: bash test_script.sh
+      - name: Run Tests 
+        run: npm test -- squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
