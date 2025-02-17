@@ -68,6 +68,9 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm install
 
+      - name: Run a basic test
+        run: echo "CI Pipeline Running!"
+
       - name: Run tests
         run: npm test -- /ci-demo-main/tests/squareroot.test.js # Tilpas testkommando efter behov
 
@@ -92,3 +95,6 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Run Tests
+        run: npm test -- /ci-demo-main/tests/squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
