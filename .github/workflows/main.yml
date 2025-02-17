@@ -1,16 +1,16 @@
-name: Simple CI Pipeline 
-on: [push, pull_request] 
-jobs: 
-  build: 
-    runs-on: ubuntu-latest 
+name: Simple CI Pipeline
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository 
+      - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run a basic test 
+      - name: Run a basic test
         run: echo "CI Pipeline Running!"
       - name: Run tests
         run: bash test_script.sh
       - name: Install npm
         run: npm install
-      - name: Run Tests 
+      - name: Run Tests
         run: npm test -- /ci-demo-main/tests/squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
