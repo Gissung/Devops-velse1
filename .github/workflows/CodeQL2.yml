@@ -1,29 +1,22 @@
-name: 'CodeQL Analysis (All Languages)'
-
+name: 'CodeQL Analysis'
+# this uses codeQL to check All languages for faults/issues the prior file only checked java and pythong
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: '0 4 * * 0' # ✅ Kør en gang om ugen (søndag kl. 04:00 UTC)
-
-permissions:
-  security-events: write
-
 jobs:
   analyze:
-    name: Analyze All Languages
+    name: Analyze
     runs-on: ubuntu-latest
-    if: github.event_name != 'push' || github.actor != 'dependabot[bot]' # ✅ Skipper analyse fra Dependabot
+    permissions:
+      security-events: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # ✅ Seneste version
+        uses: actions/checkout@v3 # ✅ Use latest version
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3 # ✅ Opgraderet til v3
-        with:
-          languages: auto # ✅ Analyserer **alle** understøttede sprog automatisk
+        uses: github/codeql-action/init@v2
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v2

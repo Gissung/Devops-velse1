@@ -55,7 +55,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Restore cached Node modules
         uses: actions/cache@v3
         with:
@@ -71,8 +70,8 @@ jobs:
       - name: Run a basic test
         run: echo "CI Pipeline Running!"
 
-      - name: Run tests
-        run: npm test -- /ci-demo-main/tests/squareroot.test.js # Tilpas testkommando efter behov
+      - name: Run tests with logging
+        run: npm test -- /ci-demo-main/tests/squareroot.test.js -- --verbose # Tilpas testkommando efter behov
 
 build:
   runs-on: ubuntu-latest
