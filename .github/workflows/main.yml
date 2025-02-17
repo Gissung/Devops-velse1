@@ -11,4 +11,4 @@ jobs:
       - name: Run tests
         run: bash test_script.sh
       - name: Run Tests 
-        run: npm test -- squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
+        run: npm test -- /ci-demo-main/tests/squareroot.test.js # Eller pytest, dotnet test osv. afhængigt af jeres tech stack
